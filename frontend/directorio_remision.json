@@ -1,0 +1,27 @@
+{
+  "nota_importante": "Directorio de EJEMPLO. Los nombres son genéricos (tipo de institución + municipio), no corresponden a instituciones ni teléfonos reales verificados. Antes de un piloto, la IPS/ESE convenida debe reemplazar cada entrada por su propia red de referencia y contrarreferencia real.",
+  "por_departamento": {
+    "_default": [
+      { "nombre": "Hospital / ESE de referencia departamental", "tipo": "Mediana o alta complejidad", "telefono": "Por definir con la IPS piloto" },
+      { "nombre": "Línea de urgencias departamental de salud", "tipo": "Coordinación de remisiones", "telefono": "Por definir con la Secretaría de Salud" }
+    ],
+    "Chocó": [
+      { "nombre": "ESE Hospital de referencia — Quibdó", "tipo": "Mediana complejidad", "telefono": "Por definir con la IPS piloto" }
+    ],
+    "Vichada": [
+      { "nombre": "ESE Hospital de referencia — Puerto Carreño", "tipo": "Baja/mediana complejidad", "telefono": "Por definir con la IPS piloto" }
+    ],
+    "Guaviare": [
+      { "nombre": "ESE Hospital de referencia — San José del Guaviare", "tipo": "Mediana complejidad", "telefono": "Por definir con la IPS piloto" }
+    ],
+    "Vaupés": [
+      { "nombre": "ESE Hospital de referencia — Mitú", "tipo": "Baja complejidad", "telefono": "Por definir con la IPS piloto" }
+    ],
+    "Cauca": [
+      { "nombre": "ESE Hospital de referencia — Popayán", "tipo": "Alta complejidad", "telefono": "Por definir con la IPS piloto" }
+    ],
+    "Putumayo": [
+      { "nombre": "ESE Hospital de referencia — Mocoa", "tipo": "Mediana complejidad", "telefono": "Por definir con la IPS piloto" }
+    ]
+  }
+}

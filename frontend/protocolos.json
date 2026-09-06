@@ -1,0 +1,202 @@
+{
+  "version": 4,
+  "nota": "Lógica de apoyo a la decisión inspirada libremente en el enfoque de banderas rojas de AIEPI (Atención Integrada a las Enfermedades Prevalentes de la Infancia, OPS/Minsalud). Es una simplificación de demostración, NO un protocolo clínicamente validado ni sustituto de valoración médica. Cacheado localmente para funcionar sin conexión.",
+  "mensaje_sin_conexion": "Estas orientaciones y el cálculo de urgencia están disponibles sin internet. Su reporte se enviará a un profesional de salud en cuanto haya conexión.",
+
+  "protocolo_rojo_offline": {
+    "titulo": "Nivel urgente (rojo): no espere a que esto se envíe",
+    "pasos": [
+      "Este reporte queda guardado y se enviará a un profesional en cuanto haya señal, pero eso puede tardar horas en esta zona — no dependa de esa respuesta para actuar ahora.",
+      "Traslade a la persona al puesto de salud, centro de salud u hospital más cercano por sus propios medios si es posible.",
+      "Si no puede desplazarse, busque de inmediato radio comunitario, teléfono satelital, o la persona con mejor señal o vehículo disponible en la vereda.",
+      "Anote la hora en que empezaron los signos de alarma — esa información ayuda al profesional en cuanto revise el caso, aunque llegue tarde.",
+      "Si logra comunicarse con la red de salud por cualquier medio (voz, radio), hágalo ahora mismo en paralelo — no en vez de este reporte, además de él."
+    ]
+  },
+
+  "grupos_edad": [
+    { "valor": "recien_nacido", "texto": "Recién nacido (0-2 meses)" },
+    { "valor": "lactante", "texto": "Lactante (2 meses-2 años)" },
+    { "valor": "nino", "texto": "Niño/a (2-11 años)" },
+    { "valor": "adolescente", "texto": "Adolescente (12-17 años)" },
+    { "valor": "adulto", "texto": "Adulto (18-59 años)" },
+    { "valor": "adulto_mayor", "texto": "Adulto mayor (60+ años)" }
+  ],
+
+  "signos_generales_peligro": [
+    { "id": "no_puede_beber", "texto": "¿No puede beber, tomar el pecho, o vomita todo lo que consume?", "bandera_roja": true },
+    { "id": "convulsiones", "texto": "¿Ha tenido convulsiones?", "bandera_roja": true },
+    { "id": "letargico", "texto": "¿Está muy somnoliento, inconsciente o muy difícil de despertar?", "bandera_roja": true }
+  ],
+
+  "protocolos": [
+    {
+      "sintoma": "Fiebre",
+      "orientacion": "Mida la temperatura si es posible. Mantenga a la persona hidratada y con ropa ligera. Puede usar antipirético según indicación previa de un profesional.",
+      "signos_alarma": ["Fiebre por más de 3 días", "Rigidez de cuello o dolor de cabeza intenso", "Manchas en la piel", "Convulsiones", "Somnolencia excesiva o dificultad para despertar", "Erupción o manchas que aparecen junto con la fiebre"],
+      "que_evitar": [
+        "No abrigar en exceso ni usar friegas de alcohol para bajar la temperatura.",
+        "No alternar o combinar distintos antipiréticos sin indicación de un profesional.",
+        "No dar aspirina a niños o adolescentes con fiebre sin indicación médica."
+      ],
+      "recomendaciones_sugeridas": [
+        "Hidratación abundante y antipirético según tolerancia.",
+        "Medir y registrar la temperatura dos veces al día.",
+        "Reconsultar de inmediato si la fiebre supera los 3 días o aparecen signos de alarma."
+      ],
+      "preguntas_triage": [
+        { "id": "fiebre_rigidez_cuello", "texto": "¿Tiene rigidez en el cuello o dolor de cabeza muy intenso?", "bandera_roja": true },
+        { "id": "fiebre_manchas_piel", "texto": "¿Tiene manchas moradas o en la piel junto con la fiebre?", "bandera_roja": true },
+        { "id": "fiebre_mas_3_dias", "texto": "¿Lleva 3 días o más con fiebre?", "peso": 2 },
+        { "id": "fiebre_muy_alta", "texto": "¿La fiebre se siente muy alta al tacto (posiblemente 39°C o más)?", "peso": 1 },
+        { "id": "fiebre_dolor_orinar", "texto": "¿Hay dolor o ardor al orinar junto con la fiebre?", "peso": 1 }
+      ]
+    },
+    {
+      "sintoma": "Dolor / malestar",
+      "orientacion": "Identifique la ubicación e intensidad del dolor. El reposo y la hidratación ayudan en dolores leves.",
+      "signos_alarma": ["Dolor de pecho", "Dolor abdominal muy intenso", "Dolor que no mejora o empeora rápidamente", "Dolor que se irradia al brazo, mandíbula o espalda"],
+      "que_evitar": [
+        "No automedicarse con antiinflamatorios si hay antecedente de úlcera, sangrado digestivo o enfermedad renal.",
+        "No restar importancia a un dolor que se irradia al brazo, la mandíbula o la espalda.",
+        "No esperar a que 'se le pase solo' si el dolor viene con sudoración fría o dificultad para respirar."
+      ],
+      "recomendaciones_sugeridas": [
+        "Reposo relativo y analgésico según tolerancia.",
+        "Evitar esfuerzos físicos intensos hasta que mejore.",
+        "Reconsultar si el dolor se localiza, empeora, o aparece fiebre asociada."
+      ],
+      "preguntas_triage": [
+        { "id": "dolor_pecho", "texto": "¿El dolor es en el pecho?", "bandera_roja": true },
+        { "id": "dolor_abdominal_intenso", "texto": "¿Es un dolor abdominal muy intenso, que no deja moverse?", "bandera_roja": true },
+        { "id": "dolor_irradia", "texto": "¿El dolor se irradia al brazo, la mandíbula o la espalda?", "bandera_roja": true },
+        { "id": "dolor_sudoracion_fria", "texto": "¿El dolor viene acompañado de sudoración fría?", "bandera_roja": true },
+        { "id": "dolor_empeora", "texto": "¿El dolor ha empeorado en las últimas horas?", "peso": 1 }
+      ]
+    },
+    {
+      "sintoma": "Dificultad para respirar",
+      "orientacion": "Mantenga a la persona sentada y calmada. Evite ambientes con humo.",
+      "signos_alarma": ["Labios o dedos morados/azulados", "Respiración muy rápida o con silbido", "No puede hablar frases completas", "Confusión o somnolencia", "Empeora notoriamente al acostarse"],
+      "que_evitar": [
+        "No usar inhaladores o medicamentos recetados a otra persona.",
+        "No esperar a que mejore solo si hay silbido, pitos, o empeora al acostarse.",
+        "No exponer a la persona a humo de leña, cigarrillo u otros irritantes mientras dure el episodio."
+      ],
+      "recomendaciones_sugeridas": [
+        "Mantener a la persona sentada, en posición cómoda, en ambiente ventilado.",
+        "Evitar humo de leña, cigarrillo u otros irritantes respiratorios.",
+        "Buscar atención inmediata si empeora la dificultad o aparecen labios morados."
+      ],
+      "preguntas_triage": [
+        { "id": "resp_labios_morados", "texto": "¿Tiene labios o dedos morados/azulados?", "bandera_roja": true },
+        { "id": "resp_no_habla_frases", "texto": "¿No puede hablar frases completas por falta de aire?", "bandera_roja": true },
+        { "id": "resp_silbido", "texto": "¿La respiración suena con silbido o pitos?", "peso": 2 },
+        { "id": "resp_rapida", "texto": "¿La respiración se ve muy rápida o agitada?", "peso": 2 },
+        { "id": "resp_empeora_acostado", "texto": "¿Empeora notoriamente al acostarse?", "peso": 2 },
+        { "id": "resp_hinchazon_piernas", "texto": "¿Hay hinchazón en las piernas junto con la dificultad para respirar?", "peso": 1 }
+      ]
+    },
+    {
+      "sintoma": "Diarrea o vómito",
+      "orientacion": "Suministre líquidos frecuentes en pequeñas cantidades (agua, suero oral casero). Evite alimentos irritantes.",
+      "signos_alarma": ["Sangre en las heces o el vómito", "Signos de deshidratación: boca seca, ojos hundidos, orina escasa u oscura", "Más de 24 horas sin mejorar en niños o adultos mayores", "Dolor abdominal muy intenso asociado"],
+      "que_evitar": [
+        "No dar antidiarreicos a niños sin indicación médica.",
+        "No suspender la lactancia materna en lactantes con diarrea.",
+        "No forzar alimentos sólidos si hay vómito activo; priorizar la hidratación."
+      ],
+      "recomendaciones_sugeridas": [
+        "Suero oral en sorbos frecuentes tras cada deposición o vómito.",
+        "Dieta blanda, evitando irritantes y lácteos mientras persista.",
+        "Reconsultar si aparece sangre, signos de deshidratación, o no mejora en 24 horas."
+      ],
+      "preguntas_triage": [
+        { "id": "diarrea_sangre", "texto": "¿Hay sangre en las heces o el vómito?", "bandera_roja": true },
+        { "id": "diarrea_deshidratacion", "texto": "¿Tiene boca muy seca, ojos hundidos, o hace muy poca orina?", "bandera_roja": true },
+        { "id": "diarrea_dolor_abdominal_intenso", "texto": "¿Hay dolor abdominal muy intenso asociado?", "bandera_roja": true },
+        { "id": "diarrea_mas_24h", "texto": "¿Lleva más de 24 horas sin mejorar?", "peso": 2 },
+        { "id": "diarrea_fiebre_alta", "texto": "¿Hay fiebre alta asociada?", "peso": 2 }
+      ]
+    },
+    {
+      "sintoma": "Gestante con molestias",
+      "orientacion": "Registre semanas de embarazo si se conocen. El reposo y la hidratación ayudan en molestias leves.",
+      "signos_alarma": ["Sangrado vaginal", "Dolor de cabeza intenso con visión borrosa", "Disminución de movimientos fetales", "Contracciones antes de tiempo", "Fiebre durante el embarazo", "Dolor abdominal intenso"],
+      "que_evitar": [
+        "No tomar ningún medicamento, incluidos analgésicos comunes, sin verificar que sea seguro en el embarazo.",
+        "No omitir los controles prenatales aunque la gestante se sienta bien.",
+        "No restar importancia a la disminución de movimientos fetales, aunque sea leve."
+      ],
+      "recomendaciones_sugeridas": [
+        "Reposo e hidratación; registrar semanas de gestación si se conocen.",
+        "Continuar controles prenatales según calendario vigente.",
+        "Remitir de inmediato ante sangrado, visión borrosa, o menos movimiento fetal de lo usual."
+      ],
+      "preguntas_triage": [
+        { "id": "gestante_sangrado", "texto": "¿Tiene sangrado vaginal?", "bandera_roja": true },
+        { "id": "gestante_vision_borrosa", "texto": "¿Tiene dolor de cabeza intenso con visión borrosa?", "bandera_roja": true },
+        { "id": "gestante_menos_movimiento", "texto": "¿Ha notado menos movimientos del bebé de lo usual?", "bandera_roja": true },
+        { "id": "gestante_dolor_abdominal_intenso", "texto": "¿Tiene dolor abdominal muy intenso?", "bandera_roja": true },
+        { "id": "gestante_contracciones", "texto": "¿Tiene contracciones y aún no es el tiempo esperado de parto?", "peso": 3 },
+        { "id": "gestante_fiebre", "texto": "¿Tiene fiebre?", "peso": 2 }
+      ]
+    },
+    {
+      "sintoma": "Erupción o lesión en la piel",
+      "orientacion": "Observe si la lesión se extiende, cambia de color, o presenta secreción. Mantenga la zona limpia y seca.",
+      "signos_alarma": ["Extensión rápida en pocas horas", "Fiebre asociada", "Secreción con mal olor o pus abundante", "Dolor desproporcionado a lo que se ve"],
+      "que_evitar": [
+        "No reventar ampollas ni manipular la lesión con las manos sucias.",
+        "No aplicar remedios caseros (barro, hierbas, ceniza) sobre heridas o erupciones.",
+        "No cubrir con vendajes ajustados si hay signos de infección."
+      ],
+      "recomendaciones_sugeridas": [
+        "Mantener la zona limpia y seca; evitar rascar o manipular.",
+        "Vigilar cambios de tamaño, color o aparición de secreción en las próximas 24-48 horas.",
+        "Reconsultar si se extiende rápido, hay fiebre, o dolor desproporcionado."
+      ],
+      "preguntas_triage": [
+        { "id": "piel_extension_rapida", "texto": "¿La lesión se ha extendido notoriamente en pocas horas?", "bandera_roja": true },
+        { "id": "piel_dolor_desproporcionado", "texto": "¿El dolor es mucho mayor de lo que se ve en la piel?", "bandera_roja": true },
+        { "id": "piel_fiebre", "texto": "¿Hay fiebre asociada?", "peso": 2 },
+        { "id": "piel_secrecion", "texto": "¿Hay secreción con mal olor o pus?", "peso": 2 }
+      ]
+    },
+    {
+      "sintoma": "Trauma o golpe",
+      "orientacion": "Aplique frío local en las primeras horas si hay hinchazón. Inmovilice si sospecha fractura y evite mover la zona afectada.",
+      "signos_alarma": ["Deformidad visible del miembro", "No puede apoyar o mover la zona", "Pérdida de conciencia tras el golpe", "Herida que no deja de sangrar"],
+      "que_evitar": [
+        "No aplicar hielo directamente sobre la piel; envolverlo siempre en un paño.",
+        "No intentar 'acomodar' una deformidad o fractura sospechada.",
+        "No dar de comer o beber si hubo pérdida de conciencia tras el golpe."
+      ],
+      "recomendaciones_sugeridas": [
+        "Frío local las primeras 24-48 horas si hay hinchazón, sin aplicar hielo directo sobre la piel.",
+        "Inmovilizar la zona si se sospecha fractura y evitar cargar peso sobre ella.",
+        "Remitir a valoración presencial si hay deformidad, pérdida de conciencia, o sangrado que no cede."
+      ],
+      "preguntas_triage": [
+        { "id": "trauma_deformidad", "texto": "¿Hay deformidad visible en el miembro afectado?", "bandera_roja": true },
+        { "id": "trauma_perdida_conciencia", "texto": "¿Hubo pérdida de conciencia después del golpe?", "bandera_roja": true },
+        { "id": "trauma_sangrado_persistente", "texto": "¿Hay una herida que no deja de sangrar?", "bandera_roja": true },
+        { "id": "trauma_no_apoya", "texto": "¿No puede apoyar o mover la zona afectada?", "peso": 2 }
+      ]
+    },
+    {
+      "sintoma": "Otro",
+      "orientacion": "Describa con el mayor detalle posible: desde cuándo, qué lo mejora o empeora, y si hay otros síntomas asociados.",
+      "signos_alarma": ["Cualquier síntoma que la persona o cuidador consideren muy grave debe remitirse a valoración presencial inmediata"],
+      "que_evitar": [
+        "No automedicarse sin describir antes el cuadro a un profesional de salud."
+      ],
+      "recomendaciones_sugeridas": [
+        "Describir con el mayor detalle posible la evolución para orientar mejor al profesional."
+      ],
+      "preguntas_triage": [
+        { "id": "otro_muy_grave", "texto": "¿La persona o el cuidador consideran esto muy grave?", "peso": 2 }
+      ]
+    }
+  ]
+}

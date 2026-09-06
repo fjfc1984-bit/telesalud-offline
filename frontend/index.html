@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Telesalud Offline-First</title>
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" href="/icons/icon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/icons/icon-192.png" sizes="192x192" type="image/png" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <meta name="theme-color" content="#0f6e5b" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <button id="btn-ir-inicio" class="marca">
+      <span class="marca-icono" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 2 2 7v6c0 5 4.2 8.7 10 9 5.8-.3 10-4 10-9V7l-10-5Zm-1 14v-3H8v-2h3V8h2v3h3v2h-3v3h-2Z"/></svg>
+      </span>
+      <span>
+        <span class="marca-nombre">Telesalud Rural</span>
+        <span class="marca-sub">Teleorientación offline-first</span>
+      </span>
+    </button>
+
+    <div class="header-derecha">
+      <span id="badge-pendientes" class="badge pendientes oculto">0 por sincronizar</span>
+      <span id="badge-conexion" class="badge offline">Sin conexión</span>
+    </div>
+  </header>
+
+  <div id="banner-rojo-pendiente" class="banner-urgente oculto" role="alert"></div>
+
+  <nav id="nav-modo" class="nav-modo">
+    <button data-vista="nueva" class="modo-btn">Reportar un caso</button>
+    <button data-vista="profesional" class="modo-btn">Portal profesional</button>
+  </nav>
+
+  <nav id="nav-comunidad" class="nav-sub oculto">
+    <button data-panel="nueva" class="activo">Nueva orientación</button>
+    <button data-panel="cola">Mi cola</button>
+  </nav>
+
+  <main>
+    <!-- INICIO -->
+    <section id="panel-home" class="panel activo">
+      <div class="hero">
+        <p class="eyebrow">Res. 1644/2026 · Teleorientación en salud</p>
+        <h2>Orientación en salud que no depende de tener internet</h2>
+        <p class="hero-dek">Pensado para zonas rurales donde la señal es intermitente o no existe. Un promotor de salud o el propio paciente reporta el caso, y un profesional responde en cuanto haya conexión — sin perder el reporte en el camino.</p>
+        <div class="hero-cta">
+          <button class="btn" data-vista="nueva">Reportar un caso</button>
+          <button class="btn secundario" data-vista="profesional">Ingresar como profesional de salud</button>
+        </div>
+      </div>
+
+      <div class="pasos">
+        <div class="paso-item">
+          <span class="paso-num">1</span>
+          <h3>Se reporta el caso</h3>
+          <p>Con o sin señal, desde una app, un teléfono básico por USSD, o un mensaje de texto.</p>
+        </div>
+        <div class="paso-item">
+          <span class="paso-num">2</span>
+          <h3>Queda guardado en el dispositivo</h3>
+          <p>El reporte nunca se pierde. Si no hay red, espera en una cola local hasta que la haya.</p>
+        </div>
+        <div class="paso-item">
+          <span class="paso-num">3</span>
+          <h3>Un profesional responde</h3>
+          <p>Los casos llegan priorizados por urgencia y quedan con historial y trazabilidad.</p>
+        </div>
+      </div>
+
+      <h3 class="titulo-seccion">Funciona con el equipo que haya disponible</h3>
+      <div class="canales">
+        <div class="canal-card">
+          <div class="canal-icono">📱</div>
+          <h4>Aplicación</h4>
+          <p>Formulario completo, con orientación general disponible incluso sin conexión.</p>
+        </div>
+        <div class="canal-card">
+          <div class="canal-icono">☎️</div>
+          <h4>Teléfono básico (USSD)</h4>
+          <p>Un menú de texto tipo *123#, sin necesidad de datos móviles.</p>
+          <button class="btn secundario btn-chico" data-vista="ussd">Ver cómo se vería</button>
+        </div>
+        <div class="canal-card">
+          <div class="canal-icono">💬</div>
+          <h4>Mensaje de texto (SMS)</h4>
+          <p>Para quien solo tiene mensajería básica, sin ningún plan de datos.</p>
+          <button class="btn secundario btn-chico" data-vista="sms">Ver cómo se vería</button>
+        </div>
+      </div>
+
+      <p class="nota-pie">Estas orientaciones son de carácter general y no reemplazan una valoración médica presencial. Prototipo con datos de demostración.</p>
+    </section>
+
+    <!-- NUEVA ORIENTACIÓN -->
+    <section id="panel-nueva" class="panel">
+      <div class="card">
+        <p>Este formulario funciona <strong>sin conexión a internet</strong>. Su reporte queda guardado en este dispositivo y se enviará automáticamente cuando haya señal.</p>
+
+        <label>Departamento</label>
+        <select id="f-departamento"></select>
+
+        <label>Municipio</label>
+        <select id="f-municipio"></select>
+
+        <label>Vereda / barrio (opcional)</label>
+        <input id="f-vereda" placeholder="Ej: vereda El Retorno" />
+
+        <label>Nombre del paciente (opcional)</label>
+        <input id="f-nombre" placeholder="Puede dejarse en blanco" />
+
+        <label>Documento del paciente (opcional, permite ver su historial)</label>
+        <input id="f-documento" placeholder="Ej: 1020304050" />
+
+        <label>Teléfono para seguimiento</label>
+        <input id="f-telefono" placeholder="Ej: 3001234567" />
+
+        <label>Grupo de edad</label>
+        <select id="f-edad"></select>
+
+        <label style="display:flex; align-items:center; gap:8px; font-weight:400;">
+          <input type="checkbox" id="f-gestante" style="width:auto;" />
+          <span>Está en embarazo</span>
+        </label>
+
+        <label>¿Qué síntoma principal presenta?</label>
+        <div id="chips-sintomas" class="chips"></div>
+
+        <div id="orientacion-offline" class="alerta oculto"></div>
+
+        <div id="triage-preguntas" class="oculto">
+          <h4 style="margin-bottom:6px;">Preguntas para calcular el nivel de urgencia</h4>
+          <div id="triage-signos-generales"></div>
+          <div id="triage-signos-sintoma"></div>
+          <div id="triage-resultado" class="alerta"></div>
+          <div id="protocolo-rojo-ahora" class="alerta-urgente oculto"></div>
+        </div>
+
+        <label>Cuénte con más detalle qué está pasando</label>
+        <textarea id="f-motivo" placeholder="Desde cuándo, qué lo mejora o empeora, otros síntomas..."></textarea>
+
+        <div class="consentimientos">
+          <label style="display:flex; align-items:flex-start; gap:8px; font-weight:400;">
+            <input type="checkbox" id="f-consentimiento" style="width:auto; margin-top:3px;" />
+            <span><strong>Consentimiento para la orientación en salud.</strong> Autorizo el uso de esta información para brindarme orientación en salud a distancia. Entiendo que el nivel de urgencia se calcula de forma automatizada a partir de mis respuestas, que esto no reemplaza el criterio de un profesional de salud, y que un profesional revisará y confirmará mi caso.</span>
+          </label>
+
+          <label style="display:flex; align-items:flex-start; gap:8px; font-weight:400; margin-top:10px;">
+            <input type="checkbox" id="f-autorizacion-datos" style="width:auto; margin-top:3px;" />
+            <span><strong>Autorización de tratamiento de datos personales</strong> (independiente del consentimiento anterior, conforme a la Ley 1581 de 2012). Autorizo el tratamiento de mis datos personales para los fines de este servicio. Puedo consultar, corregir o revocar esta autorización en cualquier momento con el código de mi caso.</span>
+          </label>
+
+          <label id="label-asentimiento-menor" class="oculto" style="display:flex; align-items:flex-start; gap:8px; font-weight:400; margin-top:10px;">
+            <input type="checkbox" id="f-asentimiento-menor" style="width:auto; margin-top:3px;" />
+            <span><strong>Asentimiento del adolescente.</strong> Además del consentimiento del acudiente, el/la adolescente comprende de qué se trata este reporte y está de acuerdo en enviarlo (Res. 1644/2026, Art. 7).</span>
+          </label>
+        </div>
+
+        <button id="btn-guardar" class="btn">Guardar reporte</button>
+        <div id="msg-guardado" class="alerta oculto"></div>
+      </div>
+    </section>
+
+    <!-- MI COLA -->
+    <section id="panel-cola" class="panel">
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <h3 style="margin:0;">Reportes de este dispositivo</h3>
+          <button id="btn-sync-ahora" class="btn secundario" style="margin:0;">Sincronizar ahora</button>
+        </div>
+        <div id="lista-cola" class="meta">Sin reportes todavía.</div>
+      </div>
+    </section>
+
+    <!-- PANEL PROFESIONAL -->
+    <section id="panel-profesional" class="panel">
+      <div id="pro-login" class="card">
+        <h3 style="margin-top:0;">Ingreso profesional de salud</h3>
+        <label>Documento profesional</label>
+        <input id="pro-documento" placeholder="Demo: 1020304050 (médico) o 1122334455 (enfermero)" />
+        <label>PIN</label>
+        <input id="pro-pin" type="password" placeholder="Demo: 1234 / 5678" inputmode="numeric" />
+        <button id="btn-pro-login" class="btn">Ingresar</button>
+        <div id="pro-login-error" class="alerta roja oculto"></div>
+      </div>
+      <div id="pro-panel" class="card oculto">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span id="pro-nombre" class="meta"></span>
+          <button id="btn-pro-salir" class="btn secundario" style="margin:0;">Salir</button>
+        </div>
+
+        <div id="pro-stats" class="stats-grid"></div>
+
+        <div class="chips" style="margin-top:10px;">
+          <div class="chip selected" data-filtro="pendiente">Pendientes</div>
+          <div class="chip" data-filtro="">Todos</div>
+          <div class="chip" data-filtro="seguimientos">Seguimientos pendientes</div>
+        </div>
+
+        <div class="filtros-row">
+          <select id="pro-filtro-municipio"><option value="">Todos los municipios</option></select>
+          <input id="pro-filtro-documento" placeholder="Buscar por documento del paciente" />
+          <button id="btn-pro-buscar-historial" class="btn secundario" style="margin:0;">Ver historial</button>
+        </div>
+        <div id="pro-historial" class="oculto"></div>
+
+        <div id="lista-profesional" style="margin-top:12px;"></div>
+      </div>
+    </section>
+
+    <!-- DEMOSTRACIÓN: CANAL USSD -->
+    <section id="panel-ussd" class="panel">
+      <div class="card">
+        <span class="badge-demo">Demostración</span>
+        <p class="meta">Así se ve el servicio en un teléfono básico, sin datos móviles: un menú por USSD (código *123#). Lo que se marque aquí crea un caso real en el sistema, igual que si llegara desde un teléfono de verdad.</p>
+        <div class="telefono-mock">
+          <div id="ussd-pantalla" class="telefono-pantalla">Marque *123# para iniciar</div>
+          <div class="telefono-input">
+            <input id="ussd-entrada" placeholder="Escriba una opción" />
+            <button id="ussd-enviar" class="btn" style="margin:0;">Enviar</button>
+          </div>
+          <button id="ussd-reiniciar" class="btn secundario" style="width:100%;">Marcar *123# (nueva sesión)</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEMOSTRACIÓN: CANAL SMS -->
+    <section id="panel-sms" class="panel">
+      <div class="card">
+        <span class="badge-demo">Demostración</span>
+        <p class="meta">Así se ve el servicio por mensaje de texto, para quien no tiene ningún plan de datos. Formato: <code>SALUD &lt;descripción&gt;</code>. Esto envía un caso real al sistema.</p>
+        <label>Su número</label>
+        <input id="sms-from" placeholder="3001234567" />
+        <label>Mensaje</label>
+        <input id="sms-texto" placeholder="SALUD fiebre y tos hace 2 dias" />
+        <button id="sms-enviar" class="btn">Enviar SMS</button>
+        <h4>Bandeja de salida (mensajes que el sistema enviaría al paciente)</h4>
+        <div id="sms-outbox" class="meta">Sin mensajes.</div>
+      </div>
+    </section>
+
+    <!-- POLÍTICA DE TRATAMIENTO DE DATOS -->
+    <section id="panel-politica-datos" class="panel">
+      <div class="card politica-datos">
+        <p class="meta" style="margin-top:0;">Versión 0.1 · Borrador · Septiembre 2026 · Ley 1581 de 2012 · Decreto 1377 de 2013 · Circular Externa SIC 002 de 2024 · Res. 1644 de 2026</p>
+        <div class="alerta">
+          <strong>Este es un borrador de un prototipo, no una política vigente.</strong> Antes de
+          usarse con pacientes reales, debe ser revisada y adoptada formalmente por el equipo
+          jurídico de la institución prestadora que opere el servicio. Ver
+          <code>docs/PROTECCION_DATOS_SIC.md</code> y
+          <code>docs/ANEXO_ENCARGO_TRATAMIENTO_DATOS.md</code> en el repositorio del proyecto.
+        </div>
+
+        <h3 id="pd-1">1. Identificación del Responsable y el Encargado del Tratamiento</h3>
+        <p>Telesalud Offline-First es un <strong>prototipo</strong>. Cuando opere bajo convenio
+        con una Institución Prestadora de Servicios de Salud (IPS/ESE), esa institución actúa
+        como <strong>Responsable del Tratamiento</strong> (Art. 3(e) Ley 1581/2012) y Telesalud
+        Offline-First como <strong>Encargado del Tratamiento</strong> (Art. 3(d)), procesando los
+        datos únicamente por instrucción de la IPS — ver el anexo de encargo del tratamiento.</p>
+
+        <h3 id="pd-2">2. Datos personales que recopilamos</h3>
+        <p><strong>2.1 Identificación:</strong> nombre y número de documento del paciente (ambos
+        opcionales en el formulario, pero necesarios para ver historial).</p>
+        <p><strong>2.2 Contacto:</strong> número de teléfono, para seguimiento.</p>
+        <p><strong>2.3 Datos de salud (sensibles):</strong> motivo de consulta, síntomas
+        reportados, respuestas al cuestionario de triage, nivel de urgencia calculado,
+        orientación y recomendaciones del profesional. A diferencia de un sistema de gestión
+        institucional, <strong>estos son el tipo de dato principal que procesa este sistema</strong>,
+        no una excepción.</p>
+        <p><strong>2.4 Metadatos:</strong> ubicación (departamento/municipio/vereda), canal de
+        reporte (app/USSD/SMS), marcas de tiempo, y un identificador de dispositivo.</p>
+
+        <h3 id="pd-3">3. Finalidad del tratamiento</h3>
+        <p>Los datos se usan exclusivamente para: (1) prestar el servicio de teleorientación —
+        conectar el reporte del paciente con un profesional de salud; (2) calcular un nivel de
+        urgencia orientativo; (3) permitir el seguimiento de casos que lo requieran; (4) dejar
+        trazabilidad y auditoría de la atención. Ningún dato se usa con fines comerciales,
+        publicitarios, ni se vende o cede a terceros.</p>
+
+        <h3 id="pd-4">4. Base legal — dos consentimientos independientes</h3>
+        <p>Conforme al Art. 7 de la Res. 1644/2026, este sistema captura <strong>dos
+        autorizaciones separadas</strong>, no una sola: el consentimiento para la orientación en
+        salud, y la autorización de tratamiento de datos personales (Ley 1581/2012). Ambas son
+        obligatorias y se registran con su propia marca de tiempo.</p>
+
+        <h3 id="pd-5">5. Datos sensibles y menores de edad</h3>
+        <p>Los datos de salud son datos sensibles (Art. 5 Ley 1581/2012) y reciben el nivel más
+        alto de protección técnica de este sistema (cifrado en reposo). Para menores de edad, la
+        Res. 1644/2026 exige el consentimiento de los padres/acudientes y, cuando la edad y
+        madurez lo permitan, el asentimiento del menor — <strong>este flujo diferenciado todavía
+        no está implementado</strong> en el formulario (ver <code>PROTECCION_DATOS_SIC.md</code>).</p>
+
+        <h3 id="pd-6">6. Compartición y transferencia de datos</h3>
+        <p>Este prototipo no comparte datos con terceros. Si se despliega bajo convenio con una
+        IPS, los datos se ponen a disposición del personal de salud autorizado por esa IPS a
+        través del panel profesional. Cualquier proveedor de infraestructura (hosting, un futuro
+        agregador de SMS/USSD) deberá documentarse aquí antes de operar con datos reales.</p>
+
+        <h3 id="pd-7">7. Conservación y retención</h3>
+        <p><strong>No hay una política de retención definida todavía</strong> — es una brecha
+        conocida. La Resolución 1995/1999 exige conservar la historia clínica un mínimo de 15
+        años; queda pendiente definir si esa obligación recae sobre este sistema directamente o
+        sobre la Historia Clínica Electrónica de la IPS una vez integrados los datos.</p>
+
+        <h3 id="pd-8">8. Derechos del titular (Habeas Data)</h3>
+        <div class="grid-derechos">
+          <div><strong>Acceso y consulta</strong><br/>Consultar su caso y la respuesta recibida con el código de 8 caracteres entregado al reportar (botón "Consultar respuesta" en Mi Cola, o por USSD/SMS).</div>
+          <div><strong>Revocación</strong><br/>Revocar la autorización de tratamiento de datos en cualquier momento con ese mismo código (botón "Revocar autorización de datos").</div>
+          <div><strong>Rectificación y supresión</strong><br/>Todavía no hay una función automatizada — contactar directamente al correo de la Sección 9 mientras se implementa.</div>
+          <div><strong>Queja ante la SIC</strong><br/>Si considera que sus derechos fueron vulnerados, puede acudir a la Superintendencia de Industria y Comercio en <a href="https://www.sic.gov.co" target="_blank" rel="noopener noreferrer">www.sic.gov.co</a>.</div>
+        </div>
+
+        <h3 id="pd-9">9. Seguridad de los datos</h3>
+        <p>Cifrado en reposo (AES-256-GCM) de nombre, documento y teléfono del paciente;
+        autenticación de profesionales por PIN + token con expiración; bitácora de auditoría de
+        solo-inserción; validación de todas las entradas. Detalle técnico completo en
+        <code>docs/ARQUITECTURA.md</code>. Este prototipo <strong>no está certificado</strong> bajo
+        ningún esquema de seguridad de la información.</p>
+
+        <h3 id="pd-10">10. Uso de cálculo automatizado (triage) y transparencia</h3>
+        <p>Conforme a la Circular Externa SIC 002/2024 y al Art. 23 de la Res. 1644/2026 (este
+        último aplicable en sentido estricto solo a telemedicina, no a teleorientación — ver
+        <code>ACREDITACION_Y_HISTORIA_CLINICA.md</code>), este sistema informa explícitamente en
+        el consentimiento que el nivel de urgencia se calcula de forma automatizada a partir de
+        las respuestas del usuario, que esto no reemplaza el criterio de un profesional, y que un
+        profesional revisa y puede corregir cada caso.</p>
+
+        <h3 id="pd-11">11. Almacenamiento en el dispositivo</h3>
+        <p>La app guarda reportes localmente en IndexedDB del navegador mientras no hay conexión,
+        y usa <code>localStorage</code> para un identificador de dispositivo y sesión de
+        profesional. Esta información vive solo en el dispositivo del usuario, no se comparte con
+        terceros, y no incluye rastreo publicitario.</p>
+
+        <h3 id="pd-12">12. Modificaciones a esta política</h3>
+        <p>Al ser un prototipo, esta política puede cambiar sin el aviso previo de 15 días que
+        exigiría una versión en producción. La versión y fecha vigente aparecen al inicio de esta
+        página.</p>
+
+        <h3 id="pd-13">13. Contacto y ejercicio de derechos</h3>
+        <p>📧 <a href="mailto:fjfc1984@gmail.com">fjfc1984@gmail.com</a> — indicando el código de
+        su caso y el derecho que desea ejercer. Al ser un prototipo, no hay un plazo de respuesta
+        formal todavía; una vez operando bajo una IPS, aplicaría el máximo de 15 días hábiles del
+        Art. 14 de la Ley 1581/2012.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Prototipo — no reemplaza atención médica presencial. Datos de demostración. ·
+    <button id="btn-ir-politica-datos" class="link-footer">Política de tratamiento de datos</button>
+  </footer>
+
+  <script src="/idb.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
