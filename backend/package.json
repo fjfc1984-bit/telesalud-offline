@@ -10,7 +10,11 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "UNLICENSED",
+  "private": true,
+  "engines": {
+    "node": ">=22.5.0"
+  },
   "type": "commonjs",
   "dependencies": {
     "express": "^5.2.1",

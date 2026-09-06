@@ -2,6 +2,11 @@
 
 Repositorio: [github.com/fjfc1984-bit/telesalud-offline](https://github.com/fjfc1984-bit/telesalud-offline)
 
+[![tests](https://github.com/fjfc1984-bit/telesalud-offline/actions/workflows/test.yml/badge.svg)](https://github.com/fjfc1984-bit/telesalud-offline/actions/workflows/test.yml)
+![node](https://img.shields.io/badge/node-%3E%3D22.5.0-339933?logo=node.js&logoColor=white)
+![PWA](https://img.shields.io/badge/PWA-offline--first-5A0FC8)
+![license](https://img.shields.io/badge/license-UNLICENSED-lightgrey)
+
 ## ¿Qué es y para quién?
 
 Un sistema de **teleorientación en salud** (regulada por la Resolución 1644/2026 — ver la nota
