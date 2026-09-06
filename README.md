@@ -1,5 +1,7 @@
 # Telesalud Offline-First para Zonas Rurales
 
+Repositorio: [github.com/fjfc1984-bit/telesalud-offline](https://github.com/fjfc1984-bit/telesalud-offline)
+
 ## ¿Qué es y para quién?
 
 Un sistema de **teleorientación en salud** (regulada por la Resolución 1644/2026 — ver la nota
